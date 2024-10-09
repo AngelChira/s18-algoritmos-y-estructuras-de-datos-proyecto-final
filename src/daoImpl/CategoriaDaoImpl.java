@@ -136,8 +136,8 @@ public class CategoriaDaoImpl implements IDaoExtendido<Categoria> {
                 if (parts.length >= 2 && (parts[0].toLowerCase().contains(valorBuscar)
                         || parts[1].toLowerCase().contains(valorBuscar))) {
                     Categoria categoria = new Categoria(
-                            Integer.parseInt(parts[0]), // ID
-                            parts[1] // Nombre
+                            Integer.parseInt(parts[0]),
+                            parts[1]
                     );
                     categoriaFiltradas.add(categoria);
                 }

@@ -41,13 +41,14 @@ public class JimCategoria extends javax.swing.JInternalFrame {
             txtBuscar.setEnabled(false);
         }
     }
-     private void OrdenarCategorias(List <Categoria> categorias) {
+
+    private void OrdenarCategorias(List<Categoria> categorias) {
         for (Categoria c : categorias) {
             filaDatos[0] = c.getIdCategoria();
             filaDatos[1] = c.getNombre();
             modelo.addRow(filaDatos);
         }
-     }
+    }
 
     private void limpiarTabla() {
         modelo = (DefaultTableModel) tblCategoria.getModel();
@@ -256,7 +257,6 @@ public class JimCategoria extends javax.swing.JInternalFrame {
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -351,18 +351,15 @@ public class JimCategoria extends javax.swing.JInternalFrame {
     private void cboOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboOrdenarActionPerformed
         String ordenar = cboOrdenar.getSelectedItem().toString().strip();
         limpiarTabla();
-       if ("Ascendente".equals(ordenar)) {
-            OrdenarCategorias(crudCategoria.ordenarCatAscendente());         
+        if ("Ascendente".equals(ordenar)) {
+            OrdenarCategorias(crudCategoria.ordenarCatAscendente());
         } else if ("Descendente".equals(ordenar)) {
             OrdenarCategorias(crudCategoria.ordenarCatDescendente());
-        }
-        else if ("Id_Descendente".equals(ordenar)) {
+        } else if ("Id_Descendente".equals(ordenar)) {
             OrdenarCategorias(crudCategoria.ordenarCatPorIdDESC());
+        } else {
+            OrdenarCategorias(crudCategoria.ordenarCatPorIdASCD());
         }
-        else {
-       OrdenarCategorias(crudCategoria.ordenarCatPorIdASCD());
-               }
-       
     }//GEN-LAST:event_cboOrdenarActionPerformed
 
 
