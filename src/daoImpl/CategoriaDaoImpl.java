@@ -10,11 +10,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Categoria;
 
 public class CategoriaDaoImpl implements IDaoExtendido<Categoria> {
+
     private ArrayList<Categoria> categorias = new ArrayList<>();
     private static final String FILE_CATEGORIAS = "categorias.txt";
     private static final String FILE_IDSCATEGORIAS = "idscategorias.txt";
@@ -117,8 +120,9 @@ public class CategoriaDaoImpl implements IDaoExtendido<Categoria> {
     public int total() {
         return categorias.size();
     }
+
     public List<Categoria> filtrarCategoria(String valorBuscar) {
-     List<Categoria> categoriaFiltradas = new ArrayList<>();
+        List<Categoria> categoriaFiltradas = new ArrayList<>();
         valorBuscar = valorBuscar.toLowerCase();
 
         if (!Files.exists(Paths.get(FILE_CATEGORIAS))) {
@@ -129,21 +133,22 @@ public class CategoriaDaoImpl implements IDaoExtendido<Categoria> {
             String linea;
             while ((linea = archivo.readLine()) != null) {
                 String[] parts = linea.strip().split(";");
-                if (parts.length >=2 && (parts[0].toLowerCase().contains(valorBuscar)||
-                                          parts[1].toLowerCase().contains(valorBuscar) )) {
+                if (parts.length >= 2 && (parts[0].toLowerCase().contains(valorBuscar)
+                        || parts[1].toLowerCase().contains(valorBuscar))) {
                     Categoria categoria = new Categoria(
-                        Integer.parseInt(parts[0]), // ID
-                        parts[1] // Nombre
-                               );
+                            Integer.parseInt(parts[0]), // ID
+                            parts[1] // Nombre
+                    );
                     categoriaFiltradas.add(categoria);
                 }
             }
-              } catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return categoriaFiltradas;
     }
+
     @Override
     public void guardarEnArchivo() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_CATEGORIAS))) {
@@ -172,5 +177,26 @@ public class CategoriaDaoImpl implements IDaoExtendido<Categoria> {
                 JOptionPane.showConfirmDialog(null, "Error al cargar las categorias", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+// public void ordenarCatAscendente() {
+//    Collections.sort(categorias, Comparator.comparing(c -> c.getNombre().trim()));
+//}
+
+    public List<Categoria> ordenarCatAscendente() {
+        Collections.sort(categorias, Comparator.comparing(Categoria::getNombre));
+        return categorias;
+    }
+
+    public List<Categoria> ordenarCatDescendente() {
+        Collections.sort(categorias, Comparator.comparing(Categoria::getNombre).reversed());
+        return categorias;
+    }
+    public List<Categoria> ordenarCatPorIdASCD() {
+        Collections.sort(categorias, Comparator.comparing(Categoria::getIdCategoria));
+        return categorias;
+    }
+    public List<Categoria> ordenarCatPorIdDESC() {
+        Collections.sort(categorias, Comparator.comparing(Categoria::getIdCategoria).reversed());
+        return categorias;
     }
 }
