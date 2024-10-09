@@ -48,15 +48,6 @@ public class JimCategoria extends javax.swing.JInternalFrame {
             modelo.addRow(filaDatos);
         }
      }
-    private void ActualizarCategorias() {
-        DefaultTableModel model = (DefaultTableModel) tblCategoria.getModel();
-        model.setRowCount(0); // Limpia las filas actuales
-
-        // Vuelve a cargar las categorías ordenadas
-        for (Categoria cat : crudCategoria.listar()) {
-            model.addRow(new Object[]{cat.getIdCategoria(), cat.getNombre()});
-        }
-    }
 
     private void limpiarTabla() {
         modelo = (DefaultTableModel) tblCategoria.getModel();
